@@ -135,29 +135,42 @@ class Node {
 }
 
 function knightMoves(start, end) {
+    //maybe don't need this, see below
     let startPoint = new Node(start)
     let currentNode = startPoint
 
+    //keep this
     let queue = [startPoint]
     let frontIndex = 0;
 
-    while(currentNode != startPoint) {
-        let front = queue[frontIndex]
+    //the current node below is wrong it's always the same
 
-        queue.push(currentNode.moveOne)
-        queue.push(currentNode.moveTwo)
-        queue.push(currentNode.moveThree)
-        queue.push(currentNode.moveFour)
-        queue.push(currentNode.moveFive)
-        queue.push(currentNode.moveSix)
-        queue.push(currentNode.moveSeven)
-        queue.push(currentNode.moveEight)
+    //while start !=end.....
+    while((currentNode.position[0] != end[0]) || (currentNode.position[1] != end[1] || currentNode == null)) {
+        currentNode = queue[frontIndex]
 
+        //create the new node here???? need to find all the moves
+
+        if (currentNode == null) {
+            frontIndex++
+            currentNode = queue[frontIndex]
+        } else if (currentNode != null) {
+            queue.push(currentNode.moveOne)
+            queue.push(currentNode.moveTwo)
+            queue.push(currentNode.moveThree)
+            queue.push(currentNode.moveFour)
+            queue.push(currentNode.moveFive)
+            queue.push(currentNode.moveSix)
+            queue.push(currentNode.moveSeven)
+            queue.push(currentNode.moveEight)
+
+            frontIndex++
+            currentNode = queue[frontIndex]
+        }
         console.log(queue)
-
-
         //queuing and looping
     }
+    return currentNode;
 
 }
 
@@ -168,4 +181,4 @@ console.log(testNode)
 let testNodeTwo = new Node([6,4])
 console.log(testNodeTwo)
 
-knightMoves([0, 0])
+console.log(knightMoves([0, 0], [4, 6]))
