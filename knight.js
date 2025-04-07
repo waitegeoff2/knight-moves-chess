@@ -14,7 +14,7 @@ class Node {
     }
 
     possibleMoves(start) {
-        
+
     }
 
     //1: +2,+1. 2: +1, +2. 3: -1,+2. 4: -2, +1. 5: -2, -1. 6: -1, -2. 7: +1, -2. 8: +2, -1.
@@ -134,9 +134,38 @@ class Node {
 
 }
 
+function knightMoves(start, end) {
+    let startPoint = new Node(start)
+    let currentNode = startPoint
+
+    let queue = [startPoint]
+    let frontIndex = 0;
+
+    while(currentNode != startPoint) {
+        let front = queue[frontIndex]
+
+        queue.push(currentNode.moveOne)
+        queue.push(currentNode.moveTwo)
+        queue.push(currentNode.moveThree)
+        queue.push(currentNode.moveFour)
+        queue.push(currentNode.moveFive)
+        queue.push(currentNode.moveSix)
+        queue.push(currentNode.moveSeven)
+        queue.push(currentNode.moveEight)
+
+        console.log(queue)
+
+
+        //queuing and looping
+    }
+
+}
+
 let testNode = new Node([0,0])
 console.log(testNode)
 
 
-let testNodeTwo = new Node([4,4])
+let testNodeTwo = new Node([6,4])
 console.log(testNodeTwo)
+
+knightMoves([0, 0])
