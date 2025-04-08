@@ -1,25 +1,13 @@
-//each square on the chessboard is a node (or vertex. A valid move is the connections between the vertexes. 
-//figure out that logic, 2 and then 1, and set the boundaries
 class Node {
     constructor(position) {
-        //add TWO WAY links somehow, so you can track back up the tree
-        this.position = position;
-        this.prevMove = null; //parent
+        this.position = position; 
+        this.prevMove = null; //parent (will need to track to find the path we took to get there)
+        //to mark if it's a turn space
         this.turnSpace = false;
-        //children -> EDGES, next moves
-        //run these in the queue
-        this.moveOne = null; // this.moveOne(this.position)
-        this.moveTwo = null;
-        this.moveThree = null;
-        this.moveFour = null;
-        this.moveFive = null;
-        this.moveSix = null;
-        this.moveSeven = null;
-        this.moveEight = null;
     }
 }
 
-//possible move functions
+//possible move functions (I know there's a more efficient way)
 
 function moveOne(start) {
     let x = start[0]
@@ -136,10 +124,12 @@ function moveEight(start) {
 //knight moves function
 
 function knightMoves(start, end) {
+    //if not a valid move. FIX THIS
     if((start[0] < 0) || (start [1] > 7) || (end[0] < 0) || (end[1] > 7)) {
         console.log("Your move is off the chess board");
     }
     
+    //set starting parameters
     let startPoint = new Node(start)
     let currentNode = startPoint
 
@@ -147,39 +137,36 @@ function knightMoves(start, end) {
     turnNode.turnSpace = true;
     console.log(turnNode)
 
-    //keep this
+    //set up queue
     let queue = [startPoint, turnNode]
     let frontIndex = 0;
     let turnCount = 0;
-    
 
-    //the current node below is wrong it's always the same
-
-    //IT's FUCKING UP READING THE NULL VALUE
+    //while the current node does not equal the end node, we keep running through the queue(or null)
     while((currentNode.position == null) || (currentNode.position[0] != end[0]) || (currentNode.position[1] != end[1])) {
+        //current node=start of the queue
         currentNode = queue[frontIndex]
 
-        //create the new node here???? need to find all the moves
-
+        //if node is empty, move on to next one
         if (currentNode.position == null) {
             frontIndex++
             currentNode = queue[frontIndex]
+        //if node is turn counter, count, add next turn counter to queue, and move on
         } else if (currentNode.turnSpace == true) {
             turnCount++
-            //new turn node....
             let nextCount = new Node(["turn", "turn"])
             nextCount.turnSpace = true;
+
             queue.push(nextCount)
             frontIndex++
             currentNode = queue[frontIndex]
+        //if node is a valid move, find all it's possible moves and add them to the queue, then move to next node in queue
         } else if (currentNode.position != null) {
-            //move one
             let firstMove = moveOne(currentNode.position)
             let firstMoveNode = new Node(firstMove)
             firstMoveNode.prevMove = currentNode
             queue.push(firstMoveNode)
 
-            //move two
             let secondMove = moveTwo(currentNode.position)
             let secondMoveNode = new Node(secondMove)
             secondMoveNode.prevMove = currentNode
@@ -218,23 +205,37 @@ function knightMoves(start, end) {
             frontIndex++
             currentNode = queue[frontIndex]
             console.log(currentNode)
-            //FIX BELOW
-
-        //look at LINKED PAGE, add a null at the end of each level, when you get to it, you'll be at the end of the level
-        //and you can add to the queue and it will be at the end of the next level
-        //IF NULL(count++ and add new null) figure that out tmrw
-        
-        //queuing and looping
     }
 
 }
+
+console.log(printChain(currentNode))
+
 console.log(turnCount)
-console.log(frontIndex)
+console.log(currentNode)
 return currentNode;
 }
 
+function printChain(node) {
+    let currentPrint = node;
+    let printString = "[" + `${currentPrint.position}` + "]";
+
+    while(currentPrint.prevMove != null) {
+        printString += "[" + currentPrint.prevMove.position + "]"
+
+        currentPrint = currentPrint.prevMove;
+    }
+    return printString;
+}
+
 //loop back up through current node to get to null and return
+//while currentNode.parent !=null. PRINT TURN EACH TIME
 
+let testNode = new Node([0, 4])
+let childNode = new Node([2,5])
+childNode.prevMove = testNode
+console.log(childNode)
 
+console.log(printChain(childNode))
 
-console.log(knightMoves([0, 0], [2, 1]))
+// console.log(knightMoves([0, 0], [7, 7]))
