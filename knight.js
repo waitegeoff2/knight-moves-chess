@@ -2,8 +2,7 @@ class Node {
     constructor(position) {
         this.position = position; 
         this.prevMove = null; //parent (will need to track to find the path we took to get there)
-        //to mark if it's a turn space
-        this.turnSpace = false;
+        this.turnSpace = false; //to keep track of the number of turns
     }
 }
 
@@ -125,8 +124,9 @@ function moveEight(start) {
 
 function knightMoves(start, end) {
     //if not a valid move. FIX THIS
-    if((start[0] < 0) || (start [1] > 7) || (end[0] < 0) || (end[1] > 7)) {
-        console.log("Your move is off the chess board");
+    if(start[0] < 0 || start[0] > 7 || start[1] < 0 || start [1] > 7 || (end[0] < 0) || end[0] > 7 || end[1] < 0 || (end[1] > 7)) {
+        console.log("that move is off the chess board")
+        throw console.error();
     }
     
     //set starting parameters
@@ -135,7 +135,6 @@ function knightMoves(start, end) {
 
     let turnNode = new Node(["turn", "turn"])
     turnNode.turnSpace = true;
-    console.log(turnNode)
 
     //set up queue
     let queue = [startPoint, turnNode]
@@ -204,19 +203,13 @@ function knightMoves(start, end) {
 
             frontIndex++
             currentNode = queue[frontIndex]
-            console.log(currentNode)
     }
 
 }
 
-console.log(printChain(currentNode))
-
-console.log(turnCount)
-console.log(currentNode)
-return currentNode;
+return console.log("You made it in " + turnCount + " moves! Here's your path: " + printChain(currentNode))
 }
 
-//REVERSE THIS
 function printChain(node) {
     let currentPrint = node;
     let printString = "[" + `${currentPrint.position}` + "]";
@@ -229,14 +222,4 @@ function printChain(node) {
     return printString;
 }
 
-//loop back up through current node to get to null and return
-//while currentNode.parent !=null. PRINT TURN EACH TIME
-
-let testNode = new Node([0, 4])
-let childNode = new Node([2,5])
-childNode.prevMove = testNode
-console.log(childNode)
-
-console.log(printChain(childNode))
-
-console.log(knightMoves([0, 0], [7, 7]))
+knightMoves([0, 7], [1, 2])
