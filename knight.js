@@ -145,11 +145,13 @@ function knightMoves(start, end) {
 
     let turnNode = new Node(["turn", "turn"])
     turnNode.turnSpace = true;
+    console.log(turnNode)
 
     //keep this
-    let queue = [startPoint]
+    let queue = [startPoint, turnNode]
     let frontIndex = 0;
     let turnCount = 0;
+    
 
     //the current node below is wrong it's always the same
 
@@ -160,6 +162,14 @@ function knightMoves(start, end) {
         //create the new node here???? need to find all the moves
 
         if (currentNode.position == null) {
+            frontIndex++
+            currentNode = queue[frontIndex]
+        } else if (currentNode.turnSpace == true) {
+            turnCount++
+            //new turn node....
+            let nextCount = new Node(["turn", "turn"])
+            nextCount.turnSpace = true;
+            queue.push(nextCount)
             frontIndex++
             currentNode = queue[frontIndex]
         } else if (currentNode.position != null) {
@@ -209,24 +219,22 @@ function knightMoves(start, end) {
             currentNode = queue[frontIndex]
             console.log(currentNode)
             //FIX BELOW
-        // } else if (currentNode.turnSpace == true) {
-        //     turnCount++
-        //     //new turn node....
-        //     let turnCountNode = new Node(["turn", "turn"])
-        //     turnCountNode.turnSpace = true;
-        //     queue.push(new Node(turnCountNode))
-        //     frontIndex++
-        //     currentNode = queue[frontIndex]
-        // }
 
         //look at LINKED PAGE, add a null at the end of each level, when you get to it, you'll be at the end of the level
         //and you can add to the queue and it will be at the end of the next level
         //IF NULL(count++ and add new null) figure that out tmrw
-        console.log(queue)
+        
         //queuing and looping
     }
+
 }
+console.log(turnCount)
+console.log(frontIndex)
 return currentNode;
 }
 
-console.log(knightMoves([0, 0], [7, 0]))
+//loop back up through current node to get to null and return
+
+
+
+console.log(knightMoves([0, 0], [2, 1]))
