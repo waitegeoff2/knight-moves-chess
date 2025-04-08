@@ -216,12 +216,13 @@ console.log(currentNode)
 return currentNode;
 }
 
+//REVERSE THIS
 function printChain(node) {
     let currentPrint = node;
     let printString = "[" + `${currentPrint.position}` + "]";
 
     while(currentPrint.prevMove != null) {
-        printString += "[" + currentPrint.prevMove.position + "]"
+        printString = ("[" + currentPrint.prevMove.position + "]" + printString)
 
         currentPrint = currentPrint.prevMove;
     }
@@ -238,4 +239,4 @@ console.log(childNode)
 
 console.log(printChain(childNode))
 
-// console.log(knightMoves([0, 0], [7, 7]))
+console.log(knightMoves([0, 0], [7, 7]))
