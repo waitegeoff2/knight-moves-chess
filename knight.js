@@ -123,7 +123,7 @@ function moveEight(start) {
 //knight moves function
 
 function knightMoves(start, end) {
-    //if not a valid move. FIX THIS
+    //if not a valid move.
     if(start[0] < 0 || start[0] > 7 || start[1] < 0 || start [1] > 7 || (end[0] < 0) || end[0] > 7 || end[1] < 0 || (end[1] > 7)) {
         console.log("that move is off the chess board")
         throw console.error();
@@ -141,7 +141,7 @@ function knightMoves(start, end) {
     let frontIndex = 0;
     let turnCount = 0;
 
-    //while the current node does not equal the end node, we keep running through the queue(or null)
+    //while the current node does not equal the end node, we keep running through the queue
     while((currentNode.position == null) || (currentNode.position[0] != end[0]) || (currentNode.position[1] != end[1])) {
         //current node=start of the queue
         currentNode = queue[frontIndex]
@@ -214,6 +214,7 @@ function printChain(node) {
     let currentPrint = node;
     let printString = "[" + `${currentPrint.position}` + "]";
 
+    //while the node's parent is not null (more parents), keep printing the chain of moves. 
     while(currentPrint.prevMove != null) {
         printString = ("[" + currentPrint.prevMove.position + "]" + printString)
 
@@ -222,4 +223,4 @@ function printChain(node) {
     return printString;
 }
 
-knightMoves([0, 7], [1, 2])
+knightMoves([0, 3], [1, 2])
